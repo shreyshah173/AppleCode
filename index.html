@@ -1,109 +1,18 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hero</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="./assets/css/responsive.css">
-    <meta name="theme-color" content="#f19e36" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="./assets/favicon/favicon.ico">
 
-</head>
-<body>
-
-    
-    <div class="squad-container">
-        <div class="login">
-            <div class="login-detail">
-                <div class="profile">
-                    <span></span>
-                </div>
-
-                <div class="user-data">
-                    <span class="name"></span>
-                    <span class="user-rank"></span>
-                </div>
-            </div>
-
-            <div>
-                <a href="login.html">
-                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.8" d="M2.00098 11.999L16.001 11.999M16.001 11.999L12.501 8.99902M16.001 11.999L12.501 14.999" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path opacity="0.5" d="M9.00195 7C9.01406 4.82497 9.11051 3.64706 9.87889 2.87868C10.7576 2 12.1718 2 15.0002 2L16.0002 2C18.8286 2 20.2429 2 21.1215 2.87868C22.0002 3.75736 22.0002 5.17157 22.0002 8L22.0002 16C22.0002 18.8284 22.0002 20.2426 21.1215 21.1213C20.2429 22 18.8286 22 16.0002 22H15.0002C12.1718 22 10.7576 22 9.87889 21.1213C9.11051 20.3529 9.01406 19.175 9.00195 17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="coin-count-container">
-        <img src="./assets/images/hamster.png" width="45px">
-        <h1 class="select-none"></h1>
-    </div>
-
-    <div class="rank-container">
-        <div class="rank-items">
-            <h3 class="select-none"></h3>
-            <span></span>
-            <img src="./assets/images/hamster.png" class="select-none" width="30px">
-            <span id="rank" class="select-none">apple</span>
-        </div>
-    </div>
-    
-    <div class="coin-container">
-     
-        <img src="./assets/images/hamster.png" id="coin" class="select-none" width="300px" />
-    </div>
-<br><br><br>
-    <div class="menu-container">
-        <div class="power">
-            <img src="./assets/images/28.png" width="40px">
-            <div class="power-count">
-                <span id="power" class="select-none">0</span>
-                <span class="gray select-none" id="total">/0</span>
-            </div>
-        </div>
-
-        <div class="menu-bottuns">
-            <a href="frens.html" class="button b-r">
-                <img src="./assets/images/1.png" alt="" width="28px">
-                <span class="select-none">friends</span>
-            </a>
-            <a href="earn.html" class="button b-r">
-                <img src="./assets/images/2.png" alt="" width="28px">
-                <span class="select-none">tasks</span>
-            </a>
-            <a href="boost.html" class="button">
-                <img src="./assets/images/3.png" alt="" width="28px">
-                <span class="select-none">balance</span>
-            </a>
-        </div>
-    </div>
-
-    <div class="progress-bar">
-        <div class="progress"></div>
-    </div>
-
-
-    <script src="./assets/js/main.js"></script>
-</body>
-</html> -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Telegram Web App Debugging</title>
+  <title>Telegram Web App</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
       margin: 20px;
     }
-    .user-info {
+    .info {
       margin-top: 20px;
     }
     .error {
@@ -117,13 +26,12 @@
   </style>
 </head>
 <body>
-  <h1>Telegram Web App Debugging</h1>
-  <p>Debugging status and logs will appear below:</p>
-  <div id="status" class="user-info">Initializing...</div>
-  <div id="user-info" class="user-info"></div>
+  <h1>Welcome to Telegram Web App</h1>
+  <p>Status and user details will appear below:</p>
+  <div id="status" class="info">Initializing...</div>
+  <div id="user-details" class="info"></div>
 
   <script>
-    // Function to log and display statuses
     function logStatus(message, isError = false, isSuccess = false) {
       const statusDiv = document.getElementById('status');
       const logMessage = `[${new Date().toISOString()}] ${message}`;
@@ -139,64 +47,51 @@
     }
 
     try {
-      // Step 1: Check for Telegram object
-      logStatus('Checking if Telegram object exists...');
+      // Check if Telegram Web App is available
+      logStatus('Checking for Telegram Web App API...');
       if (typeof Telegram === 'undefined') {
         logStatus(
-          'Telegram object is undefined. This page is not running in the Telegram app.',
+          'Telegram Web App API is not available. This page must be opened within the Telegram app via a bot.',
           true
         );
       } else {
-        logStatus('Telegram object detected.', false, true);
+        logStatus('Telegram Web App API is available.', false, true);
 
-        // Step 2: Check for Telegram.WebApp
-        logStatus('Checking if Telegram.WebApp API is available...');
-        if (!Telegram.WebApp) {
+        // Initialize Telegram Web App
+        const webApp = Telegram.WebApp;
+        logStatus('Initializing Telegram Web App...');
+
+        // Expand Web App for better user experience
+        webApp.expand();
+        logStatus('Web App expanded successfully.', false, true);
+
+        // Fetch user details
+        logStatus('Fetching user details...');
+        const user = webApp.initDataUnsafe?.user;
+
+        // Display user details
+        const userDetailsDiv = document.getElementById('user-details');
+        if (user) {
+          logStatus('User details retrieved successfully.', false, true);
+          console.log('User Details:', user);
+          userDetailsDiv.innerHTML = `
+            <p><strong>First Name:</strong> ${user.first_name}</p>
+            <p><strong>Last Name:</strong> ${user.last_name || 'Not Available'}</p>
+            <p><strong>Username:</strong> ${user.username || 'Not Available'}</p>
+          `;
+        } else {
           logStatus(
-            'Telegram.WebApp API is not available. Ensure this Web App is launched via a Telegram bot.',
+            'User details are unavailable. Ensure this Web App is launched via the bot.',
             true
           );
-        } else {
-          logStatus('Telegram.WebApp API is available.', false, true);
-
-          // Step 3: Initialize Telegram Web App
-          logStatus('Initializing Telegram Web App...');
-          const webApp = Telegram.WebApp;
-
-          // Step 4: Expand the Web App
-          logStatus('Expanding the Web App...');
-          webApp.expand();
-          logStatus('Web App expanded.', false, true);
-
-          // Step 5: Fetch user information
-          logStatus('Fetching user information from initDataUnsafe...');
-          const user = webApp.initDataUnsafe?.user;
-
-          // Step 6: Display user information
-          const userInfoDiv = document.getElementById('user-info');
-          if (user) {
-            logStatus('User information successfully retrieved.', false, true);
-            console.log('User Details:', user);
-            userInfoDiv.innerHTML = `
-              <p><strong>Username:</strong> ${user.username || 'Not Available'}</p>
-              <p><strong>First Name:</strong> ${user.first_name}</p>
-              <p><strong>Last Name:</strong> ${user.last_name || 'Not Available'}</p>
-            `;
-          } else {
-            logStatus(
-              'User information is not available in initDataUnsafe. Ensure the Web App is launched via a Telegram bot.',
-              true
-            );
-            console.error('initDataUnsafe:', webApp.initDataUnsafe);
-          }
+          userDetailsDiv.innerHTML = `
+            <p class="error">Failed to retrieve user details. Please reopen the Web App via the bot.</p>
+          `;
         }
       }
     } catch (error) {
-      // Catch and log any unexpected errors
-      logStatus(
-        'An unexpected error occurred. Check the console for details.',
-        true
-      );
+      // Log unexpected errors
+      logStatus('An unexpected error occurred. Check the console for details.', true);
       console.error('Error:', error);
     }
   </script>
