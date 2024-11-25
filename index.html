@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -88,5 +88,67 @@
 
 
     <script src="./assets/js/main.js"></script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegram User Info</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    .user-info {
+      margin-top: 20px;
+    }
+    .btn {
+      background-color: #0088cc;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #005f99;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Telegram Web App</h1>
+  <p>Click the button to fetch your Telegram details:</p>
+  <button class="btn" onclick="fetchTelegramUserInfo()">Get User Info</button>
+  <div class="user-info" id="user-info"></div>
+
+  <script>
+    function fetchTelegramUserInfo() {
+      if (typeof Telegram.WebApp !== 'undefined') {
+        const webApp = Telegram.WebApp;
+
+        // Initialize Web App
+        webApp.expand(); // Expand the web app for better UI
+        const user = webApp.initDataUnsafe?.user || null;
+
+        if (user) {
+          const userInfoDiv = document.getElementById('user-info');
+          userInfoDiv.innerHTML = `
+            <p><strong>Username:</strong> ${user.username || 'Not Available'}</p>
+            <p><strong>First Name:</strong> ${user.first_name}</p>
+            <p><strong>Last Name:</strong> ${user.last_name || 'Not Available'}</p>
+            <p><strong>Phone Number:</strong> Access through Bot API</p>
+          `;
+        } else {
+          alert('User info is not available. Make sure you access this via Telegram.');
+        }
+      } else {
+        alert('Telegram Web App not detected!');
+      }
+    }
+  </script>
 </body>
 </html>
