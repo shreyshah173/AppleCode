@@ -96,7 +96,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Telegram User Info</title>
+  <title>Telegram Web App Debug</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -106,44 +106,70 @@
     .user-info {
       margin-top: 20px;
     }
-    .btn {
-      background-color: #0088cc;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .btn:hover {
-      background-color: #005f99;
+    .error {
+      color: red;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>Welcome to Telegram Web App</h1>
-  <p>Your Telegram details will be displayed below:</p>
-  <div class="user-info" id="user-info">Loading user information...</div>
+  <h1>Telegram Web App Debugging</h1>
+  <p>Check console logs for debugging information.</p>
+  <div id="status" class="user-info">Initializing...</div>
+  <div id="user-info" class="user-info"></div>
 
   <script>
-    if (typeof Telegram.WebApp !== 'undefined') {
-      const webApp = Telegram.WebApp;
-
-      webApp.expand(); 
-      const user = webApp.initDataUnsafe?.user;
-
-      const userInfoDiv = document.getElementById('user-info');
-      if (user) {
-        userInfoDiv.innerHTML = `
-          <p><strong>Username:</strong> ${user.username || 'Not Available'}</p>
-          <p><strong>First Name:</strong> ${user.first_name}</p>
-          <p><strong>Last Name:</strong> ${user.last_name || 'Not Available'}</p>
-        `;
+    // Function to log and display statuses
+    function logStatus(message, isError = false) {
+      const statusDiv = document.getElementById('status');
+      console.log(message);
+      if (isError) {
+        statusDiv.innerHTML = `<p class="error">${message}</p>`;
       } else {
-        userInfoDiv.innerHTML = `<p>User information is not available.</p>`;
+        statusDiv.innerHTML = `<p>${message}</p>`;
       }
-    } else {
-      document.getElementById('user-info').innerHTML = `<p>Telegram Web App is not detected. Please access this via Telegram.</p>`;
+    }
+
+    try {
+      // Check if Telegram.WebApp is available
+      if (typeof Telegram === 'undefined' || !Telegram.WebApp) {
+        logStatus('Telegram Web App API is not available. Ensure you are accessing this via Telegram.', true);
+      } else {
+        logStatus('Telegram Web App API detected.');
+
+        // Initialize Telegram Web App
+        const webApp = Telegram.WebApp;
+        logStatus('Initializing Telegram Web App...');
+
+        // Expand the Web App
+        webApp.expand();
+        logStatus('Web App expanded.');
+
+        // Fetch user information
+        const user = webApp.initDataUnsafe?.user;
+        logStatus('Attempting to fetch user information...');
+
+        // Display user information or handle errors
+        const userInfoDiv = document.getElementById('user-info');
+        if (user) {
+          logStatus('User information successfully retrieved.');
+          console.log('User Details:', user);
+          userInfoDiv.innerHTML = `
+            <p><strong>Username:</strong> ${user.username || 'Not Available'}</p>
+            <p><strong>First Name:</strong> ${user.first_name}</p>
+            <p><strong>Last Name:</strong> ${user.last_name || 'Not Available'}</p>
+          `;
+        } else {
+          logStatus('User information is not available. Ensure this Web App is launched via a Telegram bot.', true);
+          console.error('User details missing in initDataUnsafe object:', webApp.initDataUnsafe);
+        }
+      }
+    } catch (error) {
+      // Catch and log any errors
+      logStatus('An error occurred while initializing the Web App. Check the console for details.', true);
+      console.error('Error:', error);
     }
   </script>
 </body>
 </html>
+
